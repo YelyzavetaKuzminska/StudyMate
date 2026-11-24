@@ -83,3 +83,50 @@ http://10.0.2.2:8000/analyze
  Подальший розвиток
 
 У майбутньому планується додати збереження завдань, дедлайни, історію аналізу та розширені AI-рекомендації.
+
+## Laboratory Work 3 — Vibe Coding
+
+### New functionality
+
+- Automatic task priority detection.
+- High priority — red.
+- Medium priority — orange.
+- Low priority — green.
+- Existing REST API contract preserved.
+
+### Backend setup
+
+```bash
+cd backend
+python -m pip install fastapi uvicorn
+python -m uvicorn main:app --host 0.0.0.0 --port 8000
+```
+
+### Android setup
+
+Open the android directory in Android Studio.
+Synchronize Gradle and run the app on an Android emulator.
+Backend URL: http://10.0.2.2:8000
+
+### API verification
+
+```bash
+curl http://localhost:8000/health
+curl -X POST http://localhost:8000/analyze \
+  -H "Content-Type: application/json" \
+  -d '{"task":"Терміново здати лабораторну"}'
+```
+
+### Knowledge Base
+
+- [Project overview](docs/project-overview.md)
+- [Requirements](docs/requirements.md)
+- [Architecture](docs/architecture.md)
+- [API contract](docs/api-contract.md)
+- [AI component](docs/ai-component.md)
+- [Testing](docs/testing.md)
+- [Known limitations](docs/known-limitations.md)
+- [Decisions](docs/decisions.md)
+- [AI instructions](docs/ai-instructions.md)
+- [Plan comparison](docs/plan-comparison.md)
+- [AI prompts](docs/prompts.md)
