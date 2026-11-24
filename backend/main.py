@@ -46,6 +46,17 @@ def analyze_task(request: TaskRequest):
         category = "Загальне навчальне завдання"
         recommendation = "Визнач мету, склади план і виділи час для виконання."
 
+    priority_text = text.replace("не терміново", "").replace("не термінове", "")
+
+    if any(word in priority_text for word in ["терміново", "сьогодні", "завтра", "дедлайн", "негайно"]):
+        priority = "Високий"
+    elif any(word in text for word in ["не терміново", "не термінове", "за бажанням", "додатков", "вільний час"]):
+        priority = "Низький"
+    else:
+        priority = "Середній"
+
+    recommendation += f" Пріоритет: {priority}."
+
     return TaskResponse(
         category=category,
         recommendation=recommendation
