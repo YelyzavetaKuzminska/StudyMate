@@ -1,6 +1,8 @@
 package com.example.helloworld
 
 import android.os.Bundle
+import android.text.SpannableString
+import android.text.style.ForegroundColorSpan
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
@@ -75,8 +77,32 @@ class MainActivity : AppCompatActivity() {
                     val recommendation = json.getString("recommendation")
 
                     runOnUiThread {
-                        resultText.text =
+                        val fullText =
                             "Категорія: $category\n\nРекомендація: $recommendation"
+
+                        val styledText = SpannableString(fullText)
+
+                        val priorityColors = mapOf(
+                            "Високий" to 0xFFC62828.toInt(),
+                            "Середній" to 0xFFE65100.toInt(),
+                            "Низький" to 0xFF2E7D32.toInt()
+                        )
+
+                        for ((priority, color) in priorityColors) {
+                            val phrase = "Пріоритет: $priority"
+                            val start = fullText.indexOf(phrase)
+
+                            if (start >= 0) {
+                                styledText.setSpan(
+                                    ForegroundColorSpan(color),
+                                    start,
+                                    start + phrase.length,
+                                    0
+                                )
+                            }
+                        }
+
+                        resultText.text = styledText
                     }
 
                 } catch (e: Exception) {
